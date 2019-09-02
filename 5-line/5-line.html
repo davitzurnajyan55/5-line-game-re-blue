@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>arrMap</title>
+</head>
+<style>
+	.divs{
+		width: 30px;
+		height: 30px;
+		background-color: black;
+		border-radius: 50%;
+		line-height: 30px;
+		text-align: center;
+		color: white;
+		font-weight: bold;
+		font-size: 2em;
+
+	}
+
+	#demo{
+		background-color: grey;
+		width: 450px;
+		height: 450px;
+		border: 5px solid;
+		border-radius: 5%;
+		display: flex;
+		margin: 30px auto;
+		padding: 5px;
+
+	}
+</style>
+<body>
+
+<span id="demo"></span>
+
+<script>
+var mode=[[1,0],[0,1],[1,1],[1,-1]];
+var color = ['red','blue'];
+var demo = document.getElementById('demo');
+var arr = new Array(15).fill();
+var step = 1;
+
+	arr.forEach((a,b)=>{
+		let div = document.createElement('div');
+		demo.appendChild(div);
+		let arr1 = new Array(15).fill();
+			arr1.forEach((a,b)=>{
+				let divs = document.createElement("div");
+				divs.classList.add('divs');
+				arr1[b] = divs;
+				div.appendChild(arr1[b]);
+			})
+			arr[b] = arr1;
+		})	
+		
+		for(let i = 0; i < arr.length; i++){
+			for(let j = 0 ; j < arr.length; j++){
+				arr[i][j].addEventListener("click", function(){
+				if (arr[i][j].style.backgroundColor == ''){
+					step++;
+					arr[i][j].style.backgroundColor = color[step%2];
+				}
+
+			for(let k = 0; k < 4; k++){
+				setTimeout(win,100,i,j,mode[k],color[step%2]);
+			}
+				})
+			}
+		}
+	function win (i,j,mode,color){
+		let count = 0;
+		for(let k = 1; k <= 5; k++){
+			//console.log(i+k*mode[0],j+k*mode[1])
+			if(arr[i+k*mode[0]] && arr[j+k*mode[1]]){
+			if(arr[i+k*mode[0]][j+k*mode[1]].style.backgroundColor == color) 	count++;
+			else   break;
+		}
+		}
+		for(let k = 1; k <= 5; k++){
+			if(arr[i-k*mode[0]] && arr[j-k*mode[1]]){
+			if(arr[i-k*mode[0]][j-k*mode[1]].style.backgroundColor == color) 	count++;
+			else   break;
+			}
+		}
+		if (count>=4) {
+			alert('win'+ ' '+color);
+			location.reload();
+		}
+	}
+</script>
+</body>
+</html>
